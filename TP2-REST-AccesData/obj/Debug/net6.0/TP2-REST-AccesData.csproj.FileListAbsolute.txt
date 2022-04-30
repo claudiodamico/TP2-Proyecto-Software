@@ -1,0 +1,17 @@
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\bin\Debug\net6.0\TP2-REST-AccesData.deps.json
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\bin\Debug\net6.0\TP2-REST-AccesData.runtimeconfig.json
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\bin\Debug\net6.0\TP2-REST-AccesData.dll
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\bin\Debug\net6.0\TP2-REST-AccesData.pdb
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\bin\Debug\net6.0\TP2-REST-Domain.dll
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\bin\Debug\net6.0\TP2-REST-Domain.pdb
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\TP2-REST-AccesData.csproj.AssemblyReference.cache
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\TP2-REST-AccesData.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\TP2-REST-AccesData.AssemblyInfoInputs.cache
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\TP2-REST-AccesData.AssemblyInfo.cs
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\TP2-REST-AccesData.csproj.CoreCompileInputs.cache
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\TP2-REST-AccesData.csproj.CopyComplete
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\TP2-REST-AccesData.dll
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\refint\TP2-REST-AccesData.dll
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\TP2-REST-AccesData.pdb
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\TP2-REST-AccesData.genruntimeconfig.cache
+C:\Users\casto\OneDrive\Documents\Proyecto Software\TP2-REST-Damico_Claudio\TP2-REST-AccesData\obj\Debug\net6.0\ref\TP2-REST-AccesData.dll
