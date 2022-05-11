@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using TP2_REST_Aplication.Services;
+using TP2_REST_Domain.Dtos;
+using TP2_REST_Domain.Entities;
 
 namespace TP2_REST_Damico_Claudio.Controllers
 {
@@ -6,10 +10,47 @@ namespace TP2_REST_Damico_Claudio.Controllers
     [ApiController]
     public class LibroController : Controller
     {
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        private readonly ILibrosService _librosService;
+        private readonly IMapper _mapper;
+
+        public LibroController(ILibrosService librosService,
+            IMapper mapper)
         {
-            return Ok(await Get());
+            _librosService = librosService;
+            _mapper = mapper;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetLibros([FromForm] bool? stock = null, string? autor = null, string? titulo = null)
+        {
+            try
+            {
+                if(stock != null && autor == null && titulo == null)
+                {
+                    var libroGet =  _librosService.GetLibroByStock(stock);
+                    var libroMapped = _mapper.Map<LibroDto>(libroGet);
+
+                    return Ok(libroMapped);
+                }
+                else if(stock == null && autor != null && titulo == null)
+                {
+                    var libroGet =  _librosService.GetLibroByAutor(autor);
+                    var libroMapped = _mapper.Map<LibroDto>(libroGet);
+
+                    return Ok(libroMapped);
+                }
+                else if(stock == null && autor == null && titulo != null)
+                {
+                    var libroGet = _librosService.GetLibroByTitulo(titulo);
+                    var libroMapped = _mapper.Map<LibroDto>(libroGet);
+
+                    return Ok(libroMapped);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
         }
 
         [HttpPost]

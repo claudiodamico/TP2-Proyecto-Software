@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TP2_REST_AccesData.Data;
 
 namespace TP2_REST_Damico_Claudio.Controllers
 {
@@ -6,10 +7,17 @@ namespace TP2_REST_Damico_Claudio.Controllers
     [ApiController]
     public class ClienteController : Controller
     {
+        private readonly LibreriaDbContext _libreriaDb;
+
+        public ClienteController(LibreriaDbContext libreria)
+        {
+            _libreriaDb = libreria;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await Get());
+            return Ok(await Post());
         }
 
         [HttpPost]
