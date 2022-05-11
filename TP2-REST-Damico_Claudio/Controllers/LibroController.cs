@@ -47,9 +47,9 @@ namespace TP2_REST_Damico_Claudio.Controllers
                 }
                 return BadRequest();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(500, "Internal Server Error");
+                return StatusCode(500, e);
             }
 
         }

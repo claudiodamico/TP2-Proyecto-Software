@@ -10,7 +10,7 @@ namespace TP2_REST_Domain.Commands
 {
     public interface ILibrosRepository
     {
-        List<Libro> GetLibros(bool stock, string autor, string titulo);
+        List<Libro> GetLibros(bool? stock, string autor, string titulo);
         Libro GetLibroByStock(bool stock);
         Libro GetLibroByAutor(string autor);
         Libro GetLibroByTitulo(String titulo);

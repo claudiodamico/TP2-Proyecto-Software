@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TP2_REST_Domain.Commands;
-using TP2_REST_Domain.Dtos;
+﻿using TP2_REST_Domain.Commands;
 using TP2_REST_Domain.Entities;
 
 namespace TP2_REST_Aplication.Services
 {
     public interface ILibrosService
     {
-        List<Libro> GetLibros(bool stock, string autor, string titulo);
+        List<Libro> GetLibros(bool? stock, string autor, string titulo);
         Libro GetLibroByStock(bool stock);
         Libro GetLibroByAutor(string autor);
         Libro GetLibroByTitulo(String titulo);
@@ -40,7 +34,7 @@ namespace TP2_REST_Aplication.Services
             return _librosRepository.GetLibroByAutor(titulo);
         }
 
-        public List<Libro> GetLibros(bool stock, string autor, string titulo)
+        public List<Libro> GetLibros(bool? stock, string autor, string titulo)
         {
             return _librosRepository.GetLibros(stock, autor, titulo);
         }
