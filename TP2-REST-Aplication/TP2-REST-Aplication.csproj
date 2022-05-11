@@ -25,8 +25,4 @@
     <ProjectReference Include="..\TP2-REST-Domain\TP2-REST-Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validations\" />
-  </ItemGroup>
-
 </Project>

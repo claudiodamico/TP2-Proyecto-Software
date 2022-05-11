@@ -45,6 +45,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
 
                     return Ok(libroMapped);
                 }
+                return BadRequest();
             }
             catch (Exception)
             {
