@@ -19,57 +19,48 @@ namespace TP2_REST_Damico_Claudio.Controllers
             _librosService = librosService;
             _mapper = mapper;
         }
+
         [HttpGet]
-        public async Task<IActionResult> GetLibros([FromForm] bool? stock = null, string? autor = null, string? titulo = null)
+        public IActionResult GetLibros([FromQuery] int? stock = null, [FromQuery] string autor = null, [FromQuery] string titulo = null)
         {
             try
             {
-                if(stock != null && autor == null && titulo == null)
+                if (stock != null && autor == null && titulo == null)
                 {
-                    var libroGet =  _librosService.GetLibroByStock(stock);
-                    var libroMapped = _mapper.Map<LibroDto>(libroGet);
+                    var libro = _librosService.GetLibrosByStock(stock);
+                    var libroMapped = _mapper.Map<LibroDto>(libro);
 
                     return Ok(libroMapped);
                 }
-                else if(stock == null && autor != null && titulo == null)
+
+                else if (stock == null && autor != null && titulo == null)
                 {
-                    var libroGet =  _librosService.GetLibroByAutor(autor);
-                    var libroMapped = _mapper.Map<LibroDto>(libroGet);
+                    var libro = _librosService.GetLibrosByAutor(autor);
+                    var libroMapped = _mapper.Map<LibroDto>(libro);
 
                     return Ok(libroMapped);
                 }
-                else if(stock == null && autor == null && titulo != null)
+
+                else if (stock == null && autor == null && titulo != null)
                 {
-                    var libroGet = _librosService.GetLibroByTitulo(titulo);
-                    var libroMapped = _mapper.Map<LibroDto>(libroGet);
+                    var libro = _librosService.GetLibrosByTitulo(titulo);
+                    var libroMapped = _mapper.Map<LibroDto>(libro);
 
                     return Ok(libroMapped);
                 }
-                return BadRequest();
+
+                else
+                {
+                    var libro = _librosService.GetAllLibros();
+                    var libroMapped = _mapper.Map<List<LibroDto>>(libro);
+
+                    return Ok(libroMapped);
+                }
             }
             catch (Exception e)
             {
-                return StatusCode(500, e);
+                return BadRequest(e.Message);
             }
-
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post()
-        {
-            return Ok(await Post());
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Put()
-        {
-            return Ok(await Put());
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete()
-        {
-            return Ok(await Delete());
         }
     }
 }

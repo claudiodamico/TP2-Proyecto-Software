@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using TP2_REST_AccesData.Data;
+using TP2_REST_Domain.Commands;
+using TP2_REST_Domain.Dtos;
 
 namespace TP2_REST_Damico_Claudio.Controllers
 {
@@ -7,35 +10,41 @@ namespace TP2_REST_Damico_Claudio.Controllers
     [ApiController]
     public class ClienteController : Controller
     {
-        private readonly LibreriaDbContext _libreriaDb;
+        private readonly IClienteRepository _clienteService;
+        private readonly IMapper _mapper;
 
-        public ClienteController(LibreriaDbContext libreria)
+        public ClienteController(IClienteRepository clienteService,
+            IMapper mapper)
         {
-            _libreriaDb = libreria;
+            _clienteService = clienteService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult GetClientes(string nombre, string apellido, string dni)
         {
-            return Ok(await Post());
+            try
+            {
+                var clientes = _clienteService.GetClientes(nombre, apellido, dni);
+                var clientesMapped = _mapper.Map<List<ClienteDto>>(clientes);
+
+                if(clientes == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(clientesMapped);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Post()
         {
             return Ok(await Post());
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Put()
-        {
-            return Ok(await Put());
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete()
-        {
-            return Ok(await Delete());
-        }
+        }      
     }
 }

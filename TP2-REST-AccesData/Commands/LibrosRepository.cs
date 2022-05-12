@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using TP2_REST_AccesData.Data;
 using TP2_REST_Domain.Commands;
 using TP2_REST_Domain.Dtos;
@@ -9,31 +9,27 @@ namespace TP2_REST_AccesData.Commands
     public class LibrosRepository : ILibrosRepository
     {
         private readonly LibreriaDbContext _context;
-        private readonly ILibrosRepository _librosRepository;
-
-        public LibrosRepository(LibreriaDbContext context, 
-            ILibrosRepository librosRepository)
+        public LibrosRepository(LibreriaDbContext context)
         {
             _context = context;
-            _librosRepository = librosRepository;   
         }
 
-        public Libro GetLibroByAutor(string autor)
+        public Libro GetLibrosByStock(int? stock)
         {
-            return _librosRepository.GetLibroByAutor(autor);
+            return _context.Libros.SingleOrDefault(libro => libro.Stock == stock);
         }
 
-        public Libro GetLibroByStock(bool stock)
+        public Libro GetLibrosByAutor(string autor)
         {
-            return _librosRepository.GetLibroByStock(stock);
+            return _context.Libros.SingleOrDefault(libro => libro.Autor == autor);
         }
-
-        public Libro GetLibroByTitulo(string titulo)
+     
+        public Libro GetLibrosByTitulo(string titulo)
         {
-            return _librosRepository.GetLibroByTitulo(titulo);
+            return _context.Libros.SingleOrDefault(libro => libro.Titulo == titulo);
         }
 
-        public List<Libro> GetLibros(bool stock, string autor, string titulo)
+        public List<Libro> GetAllLibros()
         {
             return _context.Libros.ToList();
         }
