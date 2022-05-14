@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TP2_REST_AccesData.Data;
-using TP2_REST_Domain.Commands;
+using TP2_REST_Aplication.Services;
 using TP2_REST_Domain.Dtos;
 
 namespace TP2_REST_Damico_Claudio.Controllers
@@ -10,30 +9,55 @@ namespace TP2_REST_Damico_Claudio.Controllers
     [ApiController]
     public class ClienteController : Controller
     {
-        private readonly IClienteRepository _clienteService;
+        private readonly IClientesService _clientesService;
         private readonly IMapper _mapper;
 
-        public ClienteController(IClienteRepository clienteService,
+        public ClienteController(IClientesService clientesService,
             IMapper mapper)
         {
-            _clienteService = clienteService;
+            _clientesService = clientesService;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get customers from name, last name or dni
+        /// </summary>
         [HttpGet]
-        public IActionResult GetClientes(string nombre, string apellido, string dni)
+        public IActionResult GetClientes([FromQuery] string? nombre, [FromQuery] string? apellido, [FromQuery] string? dni)
         {
             try
             {
-                var clientes = _clienteService.GetClientes(nombre, apellido, dni);
-                var clientesMapped = _mapper.Map<List<ClienteDto>>(clientes);
-
-                if(clientes == null)
+                if (nombre != null && apellido == null && dni == null)
                 {
-                    return NotFound();
+                    var cliente = _clientesService.GetClienteByNombre(nombre);
+                    var clienteMapped = _mapper.Map<ClienteDto>(cliente);
+
+                    return Ok(clienteMapped);
                 }
 
-                return Ok(clientesMapped);
+                else if (nombre == null && apellido != null && dni == null)
+                {
+                    var cliente = _clientesService.GetClienteByApellido(apellido);
+                    var clienteMapped = _mapper.Map<ClienteDto>(cliente);
+
+                    return Ok(clienteMapped);
+                }
+
+                else if (nombre == null && apellido == null && dni != null)
+                {
+                    var cliente = _clientesService.GetClienteByDni(dni);
+                    var clienteMapped = _mapper.Map<ClienteDto>(cliente);
+
+                    return Ok(clienteMapped);
+                }
+
+                else
+                {
+                    var cliente = _clientesService.GetAllClientes();
+                    var clienteMapped = _mapper.Map<List<ClienteDto>>(cliente);
+
+                    return Ok(clienteMapped);
+                }
             }
             catch (Exception e)
             {
@@ -41,10 +65,26 @@ namespace TP2_REST_Damico_Claudio.Controllers
             }
         }
 
+        /// <summary>
+        /// register customer
+        /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Post()
+        public IActionResult RegistrarCliente([FromForm] ClienteDto cliente)
         {
-            return Ok(await Post());
-        }      
+            try
+            {
+                var clienteEntity = _clientesService.CrearCliente(cliente);
+                if(clienteEntity != null)
+                {
+                    var clienteCreado = _mapper.Map<ClienteDto>(clienteEntity);
+                    return Ok(clienteCreado);
+                }
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }    
     }
 }

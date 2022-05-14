@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TP2_REST_Domain.Entities
 {
     public class Alquiler
@@ -15,7 +10,6 @@ namespace TP2_REST_Domain.Entities
         public DateTime? FechaAlquiler { get; set; }
         public DateTime? FechaReserva { get; set; }
         public DateTime? FechaDevolucion { get; set; }
-
         public virtual Cliente ClienteNavigation { get; set; }
         public virtual EstadoDeAlquiler EstadoNavigation { get; set; }
         public virtual Libro IsbnNavigation { get; set; }

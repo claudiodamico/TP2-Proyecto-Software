@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TP2_REST_Aplication.Services;
 using TP2_REST_Domain.Dtos;
-using TP2_REST_Domain.Entities;
 
 namespace TP2_REST_Damico_Claudio.Controllers
 {
@@ -20,8 +19,11 @@ namespace TP2_REST_Damico_Claudio.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get books from stock, autor or tittle.
+        /// </summary>
         [HttpGet]
-        public IActionResult GetLibros([FromQuery] int? stock = null, [FromQuery] string autor = null, [FromQuery] string titulo = null)
+        public IActionResult GetLibros([FromQuery] bool? stock = null, [FromQuery] string? autor = null, [FromQuery] string? titulo = null)
         {
             try
             {

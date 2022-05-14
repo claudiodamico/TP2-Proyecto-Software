@@ -1,5 +1,4 @@
 ﻿using TP2_REST_Domain.Commands;
-using TP2_REST_Domain.Dtos;
 using TP2_REST_Domain.Entities;
 
 namespace TP2_REST_Aplication.Services
@@ -7,11 +6,6 @@ namespace TP2_REST_Aplication.Services
     public interface ILibrosService
     {
         List<Libro> GetAllLibros();
-        Libro GetLibrosByStock(int? stock);
-        Libro GetLibrosByAutor(string autor);
-        Libro GetLibrosByTitulo(string titulo);
-
-
     }
     public class LibroService : ILibrosService
     {
@@ -22,9 +16,9 @@ namespace TP2_REST_Aplication.Services
             _librosRepository = librosRepository;
         }
 
-        public Libro GetLibrosByStock(int? stock)
+        public Libro GetLibrosByStock(bool? stock)
         {
-            return _librosRepository.GetLibrosByStock(stock);
+            return _librosRepository.GetLibrosByStock(stock.Value);
         }
 
         public Libro GetLibrosByAutor(string autor)
@@ -39,7 +33,7 @@ namespace TP2_REST_Aplication.Services
 
         public List<Libro> GetAllLibros()
         {
-            return _librosRepository.GetAllLibros();
+            return _librosRepository.GetAllLibros().ToList();
         }
     }
 }

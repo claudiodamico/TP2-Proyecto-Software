@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TP2_REST_Domain.Dtos;
 
 namespace TP2_REST_Damico_Claudio.Controllers
 {
@@ -6,28 +7,68 @@ namespace TP2_REST_Damico_Claudio.Controllers
     [ApiController]
     public class AlquilerController : Controller
     {
+        /// <summary>
+        /// Get rentals
+        /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult GetByEstado([FromQuery] int estadoId)
         {
-            return Ok(await Get());
+            try
+            {
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
+        /// <summary>
+        /// Get rentals by customer
+        /// </summary>
+        [HttpGet("cliente/{id}")]
+        public IActionResult GetAlquilerByCliente(int id)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Modify rent
+        /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Post()
+        public IActionResult Post(AlquilerDto alquilerDTO)
         {
-            return Ok(await Post());
+            try
+            {
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put()
+        /// <summary>
+        /// Modify rent by field 
+        /// </summary>
+        [HttpPatch]
+        public IActionResult Patch(ModifyAlquilerDto modifyAlquilerDto)
         {
-            return Ok(await Put());
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete()
-        {
-            return Ok(await Delete());
+            try
+            {
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

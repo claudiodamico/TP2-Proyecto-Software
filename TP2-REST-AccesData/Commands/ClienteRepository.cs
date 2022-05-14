@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TP2_REST_AccesData.Data;
+﻿using TP2_REST_AccesData.Data;
 using TP2_REST_Domain.Commands;
 using TP2_REST_Domain.Dtos;
+using TP2_REST_Domain.Entities;
 
 namespace TP2_REST_AccesData.Commands
 {
@@ -17,14 +13,38 @@ namespace TP2_REST_AccesData.Commands
         {
             _context = context;
         }
-        public List<ClienteDto> GetClientes(string nombre, string apellido, string dni)
+
+        public void Add(Cliente cliente)
         {
-            return Ok();
+            if(cliente != null)
+            {
+                _context.Clientes.Add(cliente);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("El dni ingresado ya esta registrado!");
+            }           
         }
 
-        private List<ClienteDto> Ok()
+        public List<Cliente> GetAllClientes()
         {
-            throw new NotImplementedException();
+            return _context.Clientes.ToList();
+        }
+
+        public Cliente GetClienteByApellido(string apellido)
+        {
+            return _context.Clientes.SingleOrDefault(cliente => cliente.Apellido == apellido);
+        }
+
+        public Cliente GetClienteByDni(string dni)
+        {
+            return _context.Clientes.SingleOrDefault(cliente => cliente.Dni == dni);
+        }
+
+        public Cliente GetClienteByNombre(string nombre)
+        {
+            return _context.Clientes.SingleOrDefault(cliente => cliente.Nombre == nombre);
         }
     }
 }

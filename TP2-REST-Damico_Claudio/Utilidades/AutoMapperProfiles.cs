@@ -9,6 +9,9 @@ namespace TP2_REST_Damico_Claudio.Utilidades
         public AutoMapperProfiles()
         {
             CreateMap<Libro, LibroDto>().ReverseMap();
+            CreateMap<Cliente, ClienteDto>().ReverseMap();
+            CreateMap<Alquiler, AlquilerDto>().ReverseMap();
+            CreateMap<Alquiler, ModifyAlquilerDto>().ReverseMap();
         }
     }
 }

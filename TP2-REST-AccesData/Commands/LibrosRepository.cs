@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using TP2_REST_AccesData.Data;
+﻿using TP2_REST_AccesData.Data;
 using TP2_REST_Domain.Commands;
-using TP2_REST_Domain.Dtos;
 using TP2_REST_Domain.Entities;
 
 namespace TP2_REST_AccesData.Commands
@@ -14,9 +12,9 @@ namespace TP2_REST_AccesData.Commands
             _context = context;
         }
 
-        public Libro GetLibrosByStock(int? stock)
+        public Libro GetLibrosByStock(bool? stock)
         {
-            return _context.Libros.SingleOrDefault(libro => libro.Stock == stock);
+            throw new NotImplementedException();
         }
 
         public Libro GetLibrosByAutor(string autor)

@@ -1,23 +1,23 @@
-﻿{
+{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:38695",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:63867/",
+      "sslPort": 44329
     }
   },
   "profiles": {
     "TP2_REST_Damico_Claudio": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5175",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:5175",
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",
