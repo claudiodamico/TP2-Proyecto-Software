@@ -5,15 +5,15 @@ using TP2_REST_Domain.Entities;
 
 namespace TP2_REST_AccesData.Commands
 {
-    public class AlquilerRepository : IAquilerRepository
+    public class AlquilerRepository : IAlquilerRepository
     {
         private readonly LibreriaDbContext _context;
-        private readonly IAquilerRepository _aquilerRepository;
+        private readonly IAlquilerRepository _alquilerRepository;
         public AlquilerRepository(LibreriaDbContext context,
-            IAquilerRepository aquilerRepository)
+            IAlquilerRepository alquilerRepository)
         {
             _context = context;
-            _aquilerRepository = aquilerRepository;
+            _alquilerRepository = alquilerRepository;
         }
           
         public Libro GetLibro(string isbn)
@@ -60,7 +60,7 @@ namespace TP2_REST_AccesData.Commands
                     FechaReserva = fechavalida
                 };
                 _context.Add(newAlquiler);
-                Libro libro = _aquilerRepository.GetLibro(alquiler.ISBN);
+                Libro libro = _alquilerRepository.GetLibro(alquiler.ISBN);
                 libro.Stock -= 1;
                 _context.Libros.Update(libro);
                 _context.SaveChanges();
@@ -74,12 +74,12 @@ namespace TP2_REST_AccesData.Commands
                 {
                     Cliente = alquiler.ClienteId,
                     ISBN = alquiler.ISBN,
-                    Estado = 1,
+                    Estado = 2,
                     FechaAlquiler = fechaValida,
                     FechaDevolucion = fechaValida.AddDays(7)
                 };
                 _context.Add(newAlquiler);
-                Libro libro = _aquilerRepository.GetLibro(alquiler.ISBN);
+                Libro libro = _alquilerRepository.GetLibro(alquiler.ISBN);
                 libro.Stock -= 1;
                 _context.Libros.Update(libro);
                 _context.SaveChanges();
@@ -88,35 +88,54 @@ namespace TP2_REST_AccesData.Commands
             }
         }
 
+        public void ModifyReserva(ModifyAlquilerDto modifyAlquilerDto)
+        {
+            List<Alquiler> reservas = _alquilerRepository.GetReserva(modifyAlquilerDto.ClienteId, modifyAlquilerDto.ISBN);
+            foreach (Alquiler reserva in reservas)
+            {
+                reserva.Estado = 2;
+                reserva.FechaAlquiler = DateTime.Now;
+                reserva.FechaDevolucion = DateTime.Now.AddDays(7);
+            }
+            _context.Update(reservas);
+            _context.SaveChanges();
+        }
+
         public bool ExisteCliente(int clienteId)
         {
-            return _context.Clientes
-                                    .Where(cliente => cliente.ClienteId == clienteId)
-                                      .ToList();
+            return _context.Clientes.Any(x => x.ClienteId == clienteId);
         }
 
         public bool ExisteLibro(string isbn)
         {
-            return _context.Libros
-                                  .Where(libro => libro.ISBN == isbn);
+            return _context.Libros.Any(x => x.ISBN == isbn);
         }
 
         public bool ExisteReservaDeCliente(int clienteId)
         {
-            return _context.Clientes
-                                  .Where(cliente => cliente.ClienteId == clienteId);
+            return _context.Clientes.Any(x => x.ClienteId == clienteId);
         }
 
         public bool ExisteReservaDeLibro(string isbn)
         {
-            return _context.Libros
-                                  .Where(libro => libro.ISBN == isbn);
+            return _context.Libros.Any(X => X.ISBN == isbn);
         }
 
         public bool ExisteStock(string isbn)
         {
-            return _context.Libros
-                                  .Where(libro => libro.ISBN == isbn);
+            return _context.Libros.Any(X => X.ISBN == isbn);
+        }
+        public void Update(Alquiler alquiler)
+        {
+            _context.Alquileres.Update(alquiler);
+        }
+
+        public List<Alquiler> GetReserva(int clienteId, string isbn)
+        {
+            var reserva = _context.Alquileres
+                                      .Where(alquiler => alquiler.Cliente == clienteId);
+
+            return (List<Alquiler>)reserva;
         }
     }
 }

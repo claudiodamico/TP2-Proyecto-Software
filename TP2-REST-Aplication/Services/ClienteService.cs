@@ -7,11 +7,9 @@ namespace TP2_REST_Aplication.Services
 {
     public interface IClientesService
     {
+        List<ClienteDto> GetCliente(string nombre = null, string apellido = null, string dni = null);
         Cliente CrearCliente(ClienteDto cliente);
-        List<Cliente> GetAllClientes();
-        Cliente GetClienteByNombre(string nombre);
-        Cliente GetClienteByApellido(string apellido);
-        Cliente GetClienteByDni(string dni);
+        List<Cliente> GetAllClientes();       
     }
     public class ClienteService : IClientesService
     {
@@ -28,7 +26,7 @@ namespace TP2_REST_Aplication.Services
         public Cliente CrearCliente(ClienteDto cliente)
         {
             var clienteMapeado = _mapper.Map<Cliente>(cliente);
-            _clienteRepository.Add(clienteMapeado);
+            _clienteRepository.AddCliente(clienteMapeado);
 
             return clienteMapeado;
         }
@@ -38,19 +36,11 @@ namespace TP2_REST_Aplication.Services
             return _clienteRepository.GetAllClientes().ToList();
         }
 
-        public Cliente GetClienteByApellido(string apellido)
+        public List<ClienteDto> GetCliente(string? nombre = null, string? apellido = null, string dni = null)
         {
-            return _clienteRepository.GetClienteByApellido(apellido);
-        }
+            var clientes = _clienteRepository.GetCliente(nombre, apellido, dni);
 
-        public Cliente GetClienteByDni(string dni)
-        {
-            return _clienteRepository.GetClienteByApellido(dni);
-        }
-
-        public Cliente GetClienteByNombre(string nombre)
-        {
-            return _clienteRepository.GetClienteByNombre(nombre);
+            return _mapper.Map<List<ClienteDto>>(clientes);
         }
     }
 }

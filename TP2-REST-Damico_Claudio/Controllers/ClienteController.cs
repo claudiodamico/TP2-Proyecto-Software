@@ -23,45 +23,17 @@ namespace TP2_REST_Damico_Claudio.Controllers
         /// Get customers from name, last name or dni
         /// </summary>
         [HttpGet]
-        public IActionResult GetClientes([FromQuery] string? nombre, [FromQuery] string? apellido, [FromQuery] string? dni)
+        public IActionResult GetClientes(string? nombre, string? apellido, string? dni)
         {
-            try
             {
-                if (nombre != null && apellido == null && dni == null)
+                try
                 {
-                    var cliente = _clientesService.GetClienteByNombre(nombre);
-                    var clienteMapped = _mapper.Map<ClienteDto>(cliente);
-
-                    return Ok(clienteMapped);
+                    return new JsonResult(_clientesService.GetCliente(nombre, apellido, dni)) { StatusCode = 200 };
                 }
-
-                else if (nombre == null && apellido != null && dni == null)
+                catch (Exception)
                 {
-                    var cliente = _clientesService.GetClienteByApellido(apellido);
-                    var clienteMapped = _mapper.Map<ClienteDto>(cliente);
-
-                    return Ok(clienteMapped);
+                    return StatusCode(500, "Internal Server Error");
                 }
-
-                else if (nombre == null && apellido == null && dni != null)
-                {
-                    var cliente = _clientesService.GetClienteByDni(dni);
-                    var clienteMapped = _mapper.Map<ClienteDto>(cliente);
-
-                    return Ok(clienteMapped);
-                }
-
-                else
-                {
-                    var cliente = _clientesService.GetAllClientes();
-                    var clienteMapped = _mapper.Map<List<ClienteDto>>(cliente);
-
-                    return Ok(clienteMapped);
-                }
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
             }
         }
 

@@ -3,10 +3,13 @@
 namespace TP2_REST_Domain.Commands
 {
     public interface ILibrosRepository
-    {
+    {       
         List<Libro> GetAllLibros();
-        Libro GetLibrosByStock(bool? stock);
-        Libro GetLibrosByAutor(string autor);
-        Libro GetLibrosByTitulo(string titulo);
+        List<Libro> GetLibro(string? stock = null, string? autor = null, string? titulo = null);
+        Libro GetLibroByIsbn(string isbn);
+        void Add(Libro libro);
+        void Update(Libro libro);
+        void Delete(Libro libro);
+        void DeleteByIsbn(string Iisbn);       
     }
 }

@@ -12,39 +12,47 @@ namespace TP2_REST_AccesData.Commands
         public ClienteRepository(LibreriaDbContext context)
         {
             _context = context;
-        }
-
-        public void Add(Cliente cliente)
-        {
-            if(cliente != null)
-            {
-                _context.Clientes.Add(cliente);
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("El dni ingresado ya esta registrado!");
-            }           
-        }
+        }      
 
         public List<Cliente> GetAllClientes()
         {
             return _context.Clientes.ToList();
+        }   
+
+        public List<Cliente> GetCliente(string? nombre = null, string? apellido = null, string? dni = null)
+        {
+            return _context.Clientes.
+                                    Where(cliente => (string.IsNullOrEmpty(nombre) || cliente.Nombre == nombre) &&
+                                    (string.IsNullOrEmpty(apellido) || cliente.Apellido == apellido) &&
+                                    (string.IsNullOrEmpty(dni) || cliente.Dni == dni)).ToList();
         }
 
-        public Cliente GetClienteByApellido(string apellido)
+        public void AddCliente(Cliente cliente)
         {
-            return _context.Clientes.SingleOrDefault(cliente => cliente.Apellido == apellido);
+            _context.Add(cliente);
+            _context.SaveChanges();
         }
 
-        public Cliente GetClienteByDni(string dni)
+        public Cliente GetClienteById(int id)
         {
-            return _context.Clientes.SingleOrDefault(cliente => cliente.Dni == dni);
+            return _context.Clientes.Find(id);
         }
 
-        public Cliente GetClienteByNombre(string nombre)
+        public void Update(Cliente cliente)
         {
-            return _context.Clientes.SingleOrDefault(cliente => cliente.Nombre == nombre);
+            _context.Update(cliente);
+            _context.SaveChanges();
+        }
+
+        public void Delete(Cliente cliente)
+        {
+            _context.Remove(cliente);
+            _context.SaveChanges();
+        }
+
+        public void DeleteById(int id)
+        {
+            Delete(GetClienteById(id));
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using TP2_REST_Domain.Dtos;
+using TP2_REST_Domain.Entities;
 
 namespace TP2_REST_Aplication.Validations
 {
@@ -8,9 +10,6 @@ namespace TP2_REST_Aplication.Validations
         bool ValidarString(string input);
         bool ValidarDni(string dni);
         bool ValidarFecha(string fecha);
-        string ValidarLibro(string isbn);
-
-
     }
     public class Validations : IValidations
     {
@@ -33,11 +32,6 @@ namespace TP2_REST_Aplication.Validations
         public bool ValidarFecha(string fecha)
         {
             return DateTime.TryParse(fecha, out _);
-        }
-
-        public string ValidarLibro(string isbn)
-        {
-            throw new NotImplementedException();
-        }
+        }       
     }
 }

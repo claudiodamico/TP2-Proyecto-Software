@@ -22,6 +22,8 @@ builder.Services.AddTransient<ILibrosRepository, LibrosRepository>();
 builder.Services.AddTransient<ILibrosService, LibroService>();
 builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
 builder.Services.AddTransient<IClientesService, ClienteService>();
+builder.Services.AddTransient<IAlquilerRepository, AlquilerRepository>();
+builder.Services.AddTransient<IAlquilerService, AlquilerService>();
 
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 var app = builder.Build();

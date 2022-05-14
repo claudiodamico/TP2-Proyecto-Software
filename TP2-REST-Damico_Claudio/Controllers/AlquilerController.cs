@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TP2_REST_Aplication.Services;
 using TP2_REST_Domain.Dtos;
 
 namespace TP2_REST_Damico_Claudio.Controllers
@@ -7,6 +8,13 @@ namespace TP2_REST_Damico_Claudio.Controllers
     [ApiController]
     public class AlquilerController : Controller
     {
+        private readonly IAlquilerService _alquilerService;
+
+        public AlquilerController(IAlquilerService alquilerService)
+        {
+            _alquilerService = alquilerService;
+        }
+
         /// <summary>
         /// Get rentals
         /// </summary>
@@ -15,11 +23,11 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {
-                return Ok();
+                return new JsonResult(_alquilerService.GetByEstadoId(estadoId)) { StatusCode = 200 };
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -31,11 +39,12 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {
-                return Ok();
+                return new JsonResult(_alquilerService.GetLibroByCliente(id))
+                { StatusCode = 200 };
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -43,15 +52,18 @@ namespace TP2_REST_Damico_Claudio.Controllers
         /// Modify rent
         /// </summary>
         [HttpPost]
-        public IActionResult Post(AlquilerDto alquilerDTO)
+        public IActionResult Post([FromForm] AlquilerDto alquilerDTO)
         {
             try
             {
-                return Ok();
+                var validar = _alquilerService.CreateAlquiler(alquilerDTO);
+                return (validar == null ? new JsonResult(_alquilerService.CreateAlquiler(alquilerDTO))
+                { StatusCode = 201 } : new JsonResult(validar) 
+                { StatusCode = 400 });
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -67,7 +79,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
     }

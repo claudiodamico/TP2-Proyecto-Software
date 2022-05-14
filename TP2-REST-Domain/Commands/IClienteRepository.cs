@@ -3,11 +3,13 @@
 namespace TP2_REST_Domain.Commands
 {
     public interface IClienteRepository
-    {
-        void Add(Cliente cliente);
+    {      
         List<Cliente> GetAllClientes();
-        Cliente GetClienteByNombre(string nombre);
-        Cliente GetClienteByApellido(string apellido);
-        Cliente GetClienteByDni(string dni);
+        Cliente GetClienteById(int id);
+        List<Cliente> GetCliente(string? nombre = null, string? apellido = null, string? dni = null);
+        void AddCliente(Cliente cliente);
+        void Update(Cliente cliente);
+        void Delete(Cliente cliente);
+        void DeleteById(int id);
     }
 }
