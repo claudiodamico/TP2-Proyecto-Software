@@ -60,7 +60,7 @@ namespace TP2_REST_Aplication.Services
 
         public List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoid)
         {
-            return _alquilerRepository.GetByEstadoId(estadoid);
+            return _alquilerRepository.GetByEstadoId(estadoid).ToList();
         }
 
         public Libro GetLibro(string isbn)

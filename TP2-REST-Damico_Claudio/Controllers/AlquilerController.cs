@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TP2_REST_Aplication.Services;
+using TP2_REST_Aplication.Validations;
 using TP2_REST_Domain.Dtos;
 
 namespace TP2_REST_Damico_Claudio.Controllers
@@ -9,10 +10,13 @@ namespace TP2_REST_Damico_Claudio.Controllers
     public class AlquilerController : Controller
     {
         private readonly IAlquilerService _alquilerService;
+        private readonly IValidations _validations;
 
-        public AlquilerController(IAlquilerService alquilerService)
+        public AlquilerController(IAlquilerService alquilerService
+            , IValidations validations)
         {
             _alquilerService = alquilerService;
+            _validations = validations;
         }
 
         /// <summary>
@@ -27,7 +31,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, "Internal Server Error");
+                return BadRequest(e.Message);
             }
         }
 
@@ -44,7 +48,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, "Internal Server Error");
+                return BadRequest(e.Message);
             }
         }
 
@@ -56,12 +60,11 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {
-                var validar = _alquilerService.CreateAlquiler(alquilerDTO);
+                Response validar = _validations.ValidarAlquiler(alquilerDTO);
                 if(validar != null)
                 {
                     return (validar == null ? new JsonResult(_alquilerService.CreateAlquiler(alquilerDTO))
-                    { StatusCode = 201 } : new JsonResult(validar)
-                    { StatusCode = 400 });
+                    { StatusCode = 201 } : new JsonResult(validar));
                 }
 
                 return Conflict("Error");
@@ -80,12 +83,17 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {            
+                Response validar = _validations.ValidarModifyReserva(modifyAlquilerDto);
+                if(validar != null)
+                {
+                    return new JsonResult(validar) { StatusCode = 400 };
+                }
                 _alquilerService.ModifyReserva(modifyAlquilerDto);
                 return new StatusCodeResult(204);
             }
             catch (Exception e)
             {
-                return StatusCode(500, "Internal Server Error");
+                return BadRequest(e.Message);
             }
         }
     }

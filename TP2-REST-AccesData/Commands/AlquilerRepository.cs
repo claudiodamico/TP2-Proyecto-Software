@@ -25,9 +25,9 @@ namespace TP2_REST_AccesData.Commands
         public List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoId)
         {
             var estado = _context.Alquileres
-                                      .Where(alquiler => alquiler.Estado == estadoId);
+                                      .SingleOrDefault(alquiler => alquiler.Estado == estadoId);
 
-            return (List<GetAlquilerByEstadoIdDto>)estado;
+            return new List<GetAlquilerByEstadoIdDto>();
         }
 
         public List<GetLibrosByClienteDto> GetLibroByCliente(int idCliente)
@@ -57,7 +57,7 @@ namespace TP2_REST_AccesData.Commands
                     FechaReserva = DateTime.Now
                 };
                 _context.Add(newAlquiler);
-                var libro = (Libro)_context.Libros.Where(libro => libro.ISBN == alquiler.ISBN);
+                var libro = _context.Libros.SingleOrDefault(libro => libro.ISBN == alquiler.ISBN);
                 libro.Stock -= 1;
                 _context.Libros.Update(libro);
                 _context.SaveChanges();
@@ -75,7 +75,7 @@ namespace TP2_REST_AccesData.Commands
                     FechaDevolucion = DateTime.Now.AddDays(7)
                 };
                 _context.Add(newAlquiler);
-                Libro libro = (Libro)_context.Libros.Where(libro => libro.ISBN == newAlquiler.ISBN);
+                Libro libro = _context.Libros.SingleOrDefault(libro => libro.ISBN == newAlquiler.ISBN);
                 libro.Stock -= 1;
                 _context.Libros.Update(libro);
                 _context.SaveChanges();
@@ -103,6 +103,11 @@ namespace TP2_REST_AccesData.Commands
         public bool ExisteCliente(int clienteId)
         {
             return _context.Clientes.Any(cliente => cliente.ClienteId == clienteId);
+        }
+
+        public bool ExisteDNI(string dni)
+        {
+            return _context.Clientes.Any(x => x.Dni == dni); 
         }
 
         public bool ExisteLibro(string isbn)

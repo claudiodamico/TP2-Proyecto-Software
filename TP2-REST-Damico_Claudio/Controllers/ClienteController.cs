@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TP2_REST_Aplication.Services;
+using TP2_REST_Aplication.Validations;
 using TP2_REST_Domain.Dtos;
 
 namespace TP2_REST_Damico_Claudio.Controllers
@@ -10,12 +11,14 @@ namespace TP2_REST_Damico_Claudio.Controllers
     public class ClienteController : Controller
     {
         private readonly IClientesService _clientesService;
+        private readonly IValidations _validations;
         private readonly IMapper _mapper;
 
         public ClienteController(IClientesService clientesService,
-            IMapper mapper)
+            IMapper mapper, IValidations validations)
         {
             _clientesService = clientesService;
+            _validations = validations;
             _mapper = mapper;
         }
 
@@ -45,6 +48,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {
+                Response? validar = _validations.ValidarCliente(cliente);
                 var clienteEntity = _clientesService.CrearCliente(cliente);
                 if(clienteEntity != null)
                 {

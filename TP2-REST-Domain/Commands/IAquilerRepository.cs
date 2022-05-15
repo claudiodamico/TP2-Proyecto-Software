@@ -12,6 +12,7 @@ namespace TP2_REST_Domain.Commands
         List<GetLibrosByClienteDto> GetLibroByCliente(int idCliente);
         void ModifyReserva(ModifyAlquilerDto modifyAlquilerDto);
         bool ExisteCliente(int clienteId);
+        public bool ExisteDNI(string dni);
         bool ExisteLibro(string isbn);
         bool ExisteStock(string isbn);
         bool ExisteReservaDeCliente(int clienteId);
