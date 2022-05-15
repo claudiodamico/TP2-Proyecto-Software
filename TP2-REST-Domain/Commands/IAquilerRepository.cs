@@ -10,6 +10,7 @@ namespace TP2_REST_Domain.Commands
         List<Alquiler> GetReserva(int clienteid, string isbn);
         Libro GetLibro(string isbn);
         List<GetLibrosByClienteDto> GetLibroByCliente(int idCliente);
+        void ModifyReserva(ModifyAlquilerDto modifyAlquilerDto);
         bool ExisteCliente(int clienteId);
         bool ExisteLibro(string isbn);
         bool ExisteStock(string isbn);

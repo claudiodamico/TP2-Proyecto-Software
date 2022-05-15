@@ -57,13 +57,18 @@ namespace TP2_REST_Damico_Claudio.Controllers
             try
             {
                 var validar = _alquilerService.CreateAlquiler(alquilerDTO);
-                return (validar == null ? new JsonResult(_alquilerService.CreateAlquiler(alquilerDTO))
-                { StatusCode = 201 } : new JsonResult(validar) 
-                { StatusCode = 400 });
+                if(validar != null)
+                {
+                    return (validar == null ? new JsonResult(_alquilerService.CreateAlquiler(alquilerDTO))
+                    { StatusCode = 201 } : new JsonResult(validar)
+                    { StatusCode = 400 });
+                }
+
+                return Conflict("Error");
             }
             catch (Exception e)
             {
-                return StatusCode(500, "Internal Server Error");
+                return BadRequest(e.Message);
             }
         }
 
@@ -71,11 +76,12 @@ namespace TP2_REST_Damico_Claudio.Controllers
         /// Modify rent by field 
         /// </summary>
         [HttpPatch]
-        public IActionResult Patch(ModifyAlquilerDto modifyAlquilerDto)
+        public IActionResult Patch([FromForm] ModifyAlquilerDto modifyAlquilerDto)
         {
             try
-            {
-                return Ok();
+            {            
+                _alquilerService.ModifyReserva(modifyAlquilerDto);
+                return new StatusCodeResult(204);
             }
             catch (Exception e)
             {

@@ -12,6 +12,7 @@ namespace TP2_REST_Aplication.Services
         List<Alquiler> GetReserva(int clienteid, string isbn, int estadoId);
         Libro GetLibro(string isbn);
         List<GetLibrosByClienteDto> GetLibroByCliente(int idCliente);
+        void ModifyReserva(ModifyAlquilerDto modifyAlquilerDto);
         bool ExisteCliente(int clienteId);
         bool ExisteLibro(string isbn);
         bool ExisteStock(string isbn);
@@ -75,6 +76,11 @@ namespace TP2_REST_Aplication.Services
         public List<Alquiler> GetReserva(int clienteid, string isbn, int estadoId)
         {
             return _alquilerRepository.GetReserva(clienteid, isbn);
-        }       
+        }
+
+        public void ModifyReserva(ModifyAlquilerDto modifyAlquilerDto)
+        {
+             _alquilerRepository.ModifyReserva(modifyAlquilerDto);
+        }
     }
 }
