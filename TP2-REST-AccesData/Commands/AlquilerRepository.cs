@@ -17,25 +17,22 @@ namespace TP2_REST_AccesData.Commands
         public Libro GetLibro(string isbn)
         {
             var libroGet = _context.Libros
-                                       .Where(libro => libro.ISBN == isbn);
+                                          .Where(libro => libro.ISBN == isbn);
 
             return (Libro)libroGet;
         }
 
         public List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoId)
         {
-            var estado = _context.Alquileres
-                                      .SingleOrDefault(alquiler => alquiler.Estado == estadoId);
+            var libroByEstado =  _context.Alquileres
+                                      .Include(x => x.IsbnNavigation).Where(x => x.Estado == estadoId).ToList();
 
-            return new List<GetAlquilerByEstadoIdDto>();
+            return libroByEstado;
         }
 
-        public List<GetLibrosByClienteDto> GetLibroByCliente(int idCliente)
+        public List<Alquiler> GetLibroByCliente(int clienteId)
         {
-            var alquileres = _context.Alquileres
-                                                .Where(libro => libro.Cliente == idCliente);
-
-            return (List<GetLibrosByClienteDto>)alquileres;
+            return _context.Alquileres.Include(x => x.IsbnNavigation).Where(x => x.Cliente == clienteId).ToList();
         }
 
         public List<Alquiler> GetReserva(int clienteId, string isbn)
@@ -47,7 +44,7 @@ namespace TP2_REST_AccesData.Commands
 
         public CreateAlquilerDto CreateAlquiler(AlquilerDto alquiler)
         {
-            if (alquiler.FechaAlquiler == null && alquiler.FechaAlquiler == "")
+            if (string.IsNullOrEmpty(alquiler.FechaAlquiler))
             {
                 var newAlquiler = new Alquiler
                 {
@@ -62,7 +59,7 @@ namespace TP2_REST_AccesData.Commands
                 _context.Libros.Update(libro);
                 _context.SaveChanges();
 
-                return new CreateAlquilerDto {Alquiler = "Reserva", Id = newAlquiler.ToString()};
+                return new CreateAlquilerDto { Alquiler = "Reserva", Id = newAlquiler.Id.ToString()};
             }
             else
             {
@@ -75,7 +72,7 @@ namespace TP2_REST_AccesData.Commands
                     FechaDevolucion = DateTime.Now.AddDays(7)
                 };
                 _context.Add(newAlquiler);
-                Libro libro = _context.Libros.SingleOrDefault(libro => libro.ISBN == newAlquiler.ISBN);
+                Libro libro = _context.Libros.SingleOrDefault(libro => libro.ISBN == newAlquiler.ISBN.ToString());
                 libro.Stock -= 1;
                 _context.Libros.Update(libro);
                 _context.SaveChanges();

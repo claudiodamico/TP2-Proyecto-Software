@@ -9,7 +9,7 @@ namespace TP2_REST_Domain.Commands
         List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoId);
         List<Alquiler> GetReserva(int clienteid, string isbn);
         Libro GetLibro(string isbn);
-        List<GetLibrosByClienteDto> GetLibroByCliente(int idCliente);
+        List<Alquiler> GetLibroByCliente(int clienteId);
         void ModifyReserva(ModifyAlquilerDto modifyAlquilerDto);
         bool ExisteCliente(int clienteId);
         public bool ExisteDNI(string dni);

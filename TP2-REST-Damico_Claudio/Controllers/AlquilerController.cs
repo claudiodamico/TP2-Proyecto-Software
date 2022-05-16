@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using TP2_REST_Aplication.Services;
 using TP2_REST_Aplication.Validations;
 using TP2_REST_Domain.Dtos;
+using TP2_REST_Domain.Entities;
 
 namespace TP2_REST_Damico_Claudio.Controllers
 {
@@ -11,12 +13,15 @@ namespace TP2_REST_Damico_Claudio.Controllers
     {
         private readonly IAlquilerService _alquilerService;
         private readonly IValidations _validations;
+        private readonly IMapper _mapper;
 
         public AlquilerController(IAlquilerService alquilerService
-            , IValidations validations)
+            , IValidations validations,
+            IMapper mapper)
         {
             _alquilerService = alquilerService;
             _validations = validations;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -27,7 +32,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {
-                return new JsonResult(_alquilerService.GetByEstadoId(estadoId)) { StatusCode = 200 };
+                return new JsonResult(_mapper.Map<List<Alquiler>>(_alquilerService.GetByEstadoId(estadoId))) { StatusCode = 200 };
             }
             catch (Exception e)
             {
@@ -43,7 +48,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {
-                return new JsonResult(_alquilerService.GetLibroByCliente(id))
+                return new JsonResult(_mapper.Map<List<Alquiler>>(_alquilerService.GetLibroByCliente(id)))
                 { StatusCode = 200 };
             }
             catch (Exception e)
@@ -83,7 +88,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {            
-                Response validar = _validations.ValidarModifyReserva(modifyAlquilerDto);
+                Response? validar = _validations.ValidarUpdateReserva(modifyAlquilerDto);
                 if(validar != null)
                 {
                     return new JsonResult(validar) { StatusCode = 400 };

@@ -6,7 +6,7 @@ namespace TP2_REST_Aplication.Validations
     public interface IValidations
     {
         Response? ValidarAlquiler(AlquilerDto alquilerDto);
-        Response? ValidarModifyReserva(ModifyAlquilerDto modifyAlquilerDto);
+        Response? ValidarUpdateReserva(ModifyAlquilerDto modifyAlquilerDto);
         Response? ValidarCliente(ClienteDto clienteDto);
     }
 
@@ -60,7 +60,7 @@ namespace TP2_REST_Aplication.Validations
             return null;
         }
 
-        public Response? ValidarModifyReserva(ModifyAlquilerDto modifyAlquilerDto)
+        public Response? ValidarUpdateReserva(ModifyAlquilerDto modifyAlquilerDto)
         {
             if (!_alquilerRepository.ExisteReservaDeCliente(modifyAlquilerDto.ClienteId))
                 return new Response { CódigoError = 400, Error = "No existe reserva del cliente ingresado" };

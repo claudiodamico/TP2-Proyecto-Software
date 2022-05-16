@@ -11,7 +11,7 @@ namespace TP2_REST_Aplication.Services
         List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoid);
         List<Alquiler> GetReserva(int clienteid, string isbn, int estadoId);
         Libro GetLibro(string isbn);
-        List<GetLibrosByClienteDto> GetLibroByCliente(int idCliente);
+        List<Alquiler> GetLibroByCliente(int idCliente);
         void ModifyReserva(ModifyAlquilerDto modifyAlquilerDto);
         bool ExisteCliente(int clienteId);
         bool ExisteLibro(string isbn);
@@ -25,7 +25,7 @@ namespace TP2_REST_Aplication.Services
 
         public AlquilerService(IAlquilerRepository alquilerRepository)
         {
-            _alquilerRepository = alquilerRepository;
+            _alquilerRepository = alquilerRepository;;   
         }
 
         public CreateAlquilerDto CreateAlquiler(AlquilerDto alquiler)
@@ -60,7 +60,7 @@ namespace TP2_REST_Aplication.Services
 
         public List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoid)
         {
-            return _alquilerRepository.GetByEstadoId(estadoid).ToList();
+            return _alquilerRepository.GetByEstadoId(estadoid);
         }
 
         public Libro GetLibro(string isbn)
@@ -68,9 +68,11 @@ namespace TP2_REST_Aplication.Services
             return _alquilerRepository.GetLibro(isbn);
         }
 
-        public List<GetLibrosByClienteDto> GetLibroByCliente(int idCliente)
+        public List<Alquiler> GetLibroByCliente(int idCliente)
         {
-            return _alquilerRepository.GetLibroByCliente(idCliente);
+            var alquileresByClient = _alquilerRepository.GetLibroByCliente(idCliente);
+            
+            return alquileresByClient;
         }
 
         public List<Alquiler> GetReserva(int clienteid, string isbn, int estadoId)

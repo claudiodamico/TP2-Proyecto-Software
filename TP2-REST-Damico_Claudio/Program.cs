@@ -2,13 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using TP2_REST_AccesData.Commands;
 using TP2_REST_AccesData.Data;
 using TP2_REST_Aplication.Services;
+using TP2_REST_Aplication.Validations;
 using TP2_REST_Domain.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // This method gets called by the runtime. Use this method to add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x => 
+                                x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<LibreriaDbContext>(options =>
 {
@@ -24,6 +26,7 @@ builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
 builder.Services.AddTransient<IClientesService, ClienteService>();
 builder.Services.AddTransient<IAlquilerRepository, AlquilerRepository>();
 builder.Services.AddTransient<IAlquilerService, AlquilerService>();
+builder.Services.AddTransient<IValidations, Validations>();
 
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 var app = builder.Build();
