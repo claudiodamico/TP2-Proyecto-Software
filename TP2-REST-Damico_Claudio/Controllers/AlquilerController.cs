@@ -65,7 +65,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {
-                Response validar = _validations.ValidarAlquiler(alquilerDTO);
+                Response? validar = _validations.ValidarAlquiler(alquilerDTO);
                 if(validar != null)
                 {
                     return (validar == null ? new JsonResult(_alquilerService.CreateAlquiler(alquilerDTO))

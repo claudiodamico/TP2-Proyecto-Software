@@ -8,7 +8,7 @@ namespace TP2_REST_Aplication.Services
     public interface IAlquilerService
     {
         CreateAlquilerDto CreateAlquiler(AlquilerDto alquiler);
-        List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoid);
+        List<Alquiler> GetByEstadoId(int estadoid);
         List<Alquiler> GetReserva(int clienteid, string isbn, int estadoId);
         Libro GetLibro(string isbn);
         List<Alquiler> GetLibroByCliente(int idCliente);
@@ -58,7 +58,7 @@ namespace TP2_REST_Aplication.Services
             return _alquilerRepository.ExisteStock(isbn);
         }
 
-        public List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoid)
+        public List<Alquiler> GetByEstadoId(int estadoid)
         {
             return _alquilerRepository.GetByEstadoId(estadoid);
         }

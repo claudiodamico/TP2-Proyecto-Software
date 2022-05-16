@@ -6,7 +6,7 @@ namespace TP2_REST_Domain.Commands
     public interface IAlquilerRepository
     {
         CreateAlquilerDto CreateAlquiler(AlquilerDto alquiler);
-        List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoId);
+        List<Alquiler> GetByEstadoId(int estadoId);
         List<Alquiler> GetReserva(int clienteid, string isbn);
         Libro GetLibro(string isbn);
         List<Alquiler> GetLibroByCliente(int clienteId);

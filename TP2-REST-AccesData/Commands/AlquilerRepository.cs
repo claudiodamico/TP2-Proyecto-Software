@@ -22,12 +22,9 @@ namespace TP2_REST_AccesData.Commands
             return (Libro)libroGet;
         }
 
-        public List<GetAlquilerByEstadoIdDto> GetByEstadoId(int estadoId)
+        public List<Alquiler> GetByEstadoId(int estadoId)
         {
-            var libroByEstado =  _context.Alquileres
-                                      .Include(x => x.IsbnNavigation).Where(x => x.Estado == estadoId).ToList();
-
-            return libroByEstado;
+            return _context.Alquileres.Include(x => x.IsbnNavigation).Where(x => x.Estado == estadoId).ToList();
         }
 
         public List<Alquiler> GetLibroByCliente(int clienteId)
