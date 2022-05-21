@@ -44,7 +44,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
         /// register customer
         /// </summary>
         [HttpPost]
-        public IActionResult RegistrarCliente([FromForm] ClienteDto cliente)
+        public IActionResult RegistrarCliente(ClienteDto cliente)
         {
             try
             {

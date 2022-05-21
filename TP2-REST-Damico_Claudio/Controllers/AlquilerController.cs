@@ -48,8 +48,7 @@ namespace TP2_REST_Damico_Claudio.Controllers
         {
             try
             {
-                return new JsonResult(_mapper.Map<List<Alquiler>>(_alquilerService.GetLibroByCliente(id)))
-                { StatusCode = 200 };
+                return new JsonResult(_mapper.Map<List<Alquiler>>(_alquilerService.GetLibroByCliente(id))) {StatusCode = 200};
             }
             catch (Exception e)
             {
@@ -61,23 +60,9 @@ namespace TP2_REST_Damico_Claudio.Controllers
         /// Modify rent
         /// </summary>
         [HttpPost]
-        public IActionResult Post([FromForm] AlquilerDto alquilerDTO)
-        {
-            try
-            {
-                Response? validar = _validations.ValidarAlquiler(alquilerDTO);
-                if(validar != null)
-                {
-                    return (validar == null ? new JsonResult(_alquilerService.CreateAlquiler(alquilerDTO))
-                    { StatusCode = 201 } : new JsonResult(validar));
-                }
-
-                return Conflict("Error");
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+        public IActionResult Post(AlquilerDto alquilerDTO)
+        { 
+             return new JsonResult(_alquilerService.CreateAlquiler(alquilerDTO)) {StatusCode = 201};        
         }
 
         /// <summary>
@@ -86,20 +71,9 @@ namespace TP2_REST_Damico_Claudio.Controllers
         [HttpPatch]
         public IActionResult Patch([FromForm] ModifyAlquilerDto modifyAlquilerDto)
         {
-            try
-            {            
-                Response? validar = _validations.ValidarUpdateReserva(modifyAlquilerDto);
-                if(validar != null)
-                {
-                    return new JsonResult(validar) { StatusCode = 400 };
-                }
-                _alquilerService.ModifyReserva(modifyAlquilerDto);
-                return new StatusCodeResult(204);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            _alquilerService.ModifyReserva(modifyAlquilerDto);
+
+            return new StatusCodeResult(204);
         }
     }
 }

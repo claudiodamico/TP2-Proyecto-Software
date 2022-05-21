@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TP2_REST_Domain.Entities
 {
     public class Cliente
@@ -18,7 +13,6 @@ namespace TP2_REST_Domain.Entities
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Email { get; set; }
-
         public virtual ICollection<Alquiler> Alquileres { get; set; }
     }
 }
